@@ -1,1 +1,2 @@
-This is my Personal Computer Science Learning respiratory, I will regularly update it.
+This is my Personal Computer Science Learning repertory, I will regularly update it.
+

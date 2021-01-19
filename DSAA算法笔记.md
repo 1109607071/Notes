@@ -1,16 +1,12 @@
 # DSAA 算法笔记
 
----
-
 [toc]
-
-
-
----
 
 ##### [网课地址](http://mooc1.chaoxing.com/course/214395507.html)
 
 leetcode: some questions for you to practise
+
+
 
 
 
@@ -71,17 +67,11 @@ recursiveMethod(parameters) {
 
 
 
----
-
 ### Search Algorithms
-
----
 
 
 
 #### Binary Search Algorithm
-
----
 
 ```pseudocode
 for an sorted Array[n]
@@ -119,21 +109,11 @@ return right
 
 
 
-
-
----
-
 ### Sort Algorithms
-
----
-
-
 
 
 
 #### Selection Sort
-
----
 
 In the __Selection Sort__, we find the smallest number in every travel then put it in the first place. Pointer `i` marks the first place of this travel, pointer `j` will traverse the right part and compare to the value of register `k`.
 
@@ -154,8 +134,6 @@ for int i = 0 to n-2 // we don't need to sort the last one
 
 #### Insersion Sort
 
----
-
 In the __Insersion Sort__, there are _"sorted"_ part and _"not sorted"_ part, divided by pointer `i`. When a new number enters the _"sorted"_ list, it uses `swap()` to bubble-like move to the correct place.
 
 > This is like _"divide but not conqurer"_, divide but only sort one side
@@ -172,8 +150,6 @@ for int i = 0 to n-1
 
 
 #### Merge Sort
-
----
 
 > _"Devide and Conquer"_
 
@@ -256,8 +232,6 @@ Lines[lo -> hi] = Lines_[lo -> hi]
 
 #### Quick Sort
 
----
-
 > _"Let random do the job."_
 
 - Quicksort( A[n], lo = 0, hi = n-1 )
@@ -293,7 +267,7 @@ return L
 
 
 
----
+
 
 ### Linked List (链表)
 
@@ -523,8 +497,6 @@ node polyItem{
 
 ### Stack (堆)
 
----
-
 #### Definition
 
 - First In Last Out (**FILO**)
@@ -569,8 +541,6 @@ pop(j)
 
 
 ### Queue (队列)
-
----
 
 #### Definition
 
@@ -637,8 +607,6 @@ $\uparrow$ Waste a lot of space!
 
 
 ### String Matching
-
----
 
 #### Concepts
 
@@ -840,12 +808,7 @@ while (i < n && j < m)
 
 
 
-
-
----
 ### Tree
-
----
 
 This lecture provides a formal definition of ***trees***, which constitute an important approach to organize data in computer science. We will also prove some basic properties of trees that will be useful in computer sci  ence.
 
@@ -1318,8 +1281,6 @@ C++ code: [AVL tree](https://www.luogu.com.cn/problem/solution/P3369?page=3)
 
 ### Graph
 
----
-
 #### Graph Concepts
 
 * Undirected Graph:
@@ -1622,8 +1583,6 @@ MST-PRIM(G, w, r)
 
 ### RAM Computation Model
 
----
-
 **Hard Disk (TB Level)** —[I/O cost]—> **RAM (GB Level)** —[CPU cost]—> **CPU (ALU)**
 
 - We focus on the **CPU cost**
@@ -1659,8 +1618,6 @@ MST-PRIM(G, w, r)
 
 
 ### Algorithm Analysis
-
-----
 
 - **Algorithm**
     - A sequence of basic operations
@@ -1721,9 +1678,9 @@ MST-PRIM(G, w, r)
 
 
 
-
-
 ---
+
+
 
 ### Master Theorem （主定理）
 
@@ -1750,22 +1707,4 @@ MST-PRIM(G, w, r)
 >
 > Hence, $α = 2, β = 2, γ = 1$. 
 >
-> Since $\log_𝛽 𝛼 = \log_2 2 = 1 = γ$, we know that $𝑇(𝑛) = 𝑂(𝑛^1\log 𝑛) = 𝑂(n\log 𝑛)$.
-
-
-
-
-
-
----
-
----
-
-
-
-
-
-
-
-
-
+> Since $\log_𝛽 𝛼 = \log_2 2 = 1 = γ$, we know that $𝑇(𝑛) = 𝑂(𝑛^1\log 𝑛) = 𝑂(n\log 𝑛)
