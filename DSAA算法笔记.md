@@ -1365,6 +1365,42 @@ Space = $O(|V|+|E|)$
 
 
 
+- 邻接表
+
+```cpp
+int head[MAXN];		// head[i] store the next store_node in the nodelist of the ith node;
+					// head of the linked list
+int vis[MAXN];		// vis[i] represent the visit status of the ith node
+int cnt = 0;		// a pointer in the nodelist
+
+struct node {		// each node store one adjacent node of this node(check it in the head[])
+    int to;			// the adjacent_node stored inside this store_node
+    int nxt;		// next store_node, a linked list of one actual node
+} nodelist[MAXN*2];
+
+// link two nodes together
+inline void link(int x, int y) {
+    cnt++;
+    nodelist[cnt].to = y;
+    nodelist[cnt].nxt = head[x];
+    head[x] = cnt;
+}
+
+void dfs(int x, int pre, int d) {
+	for (int i = head[x]; i > 0; i = nodelist[i].nxt) {
+        int v = nodelist[i].to;
+        if (v != pre)
+            dfs(v, x, d + 1);
+    }
+}
+```
+
+
+
+
+
+
+
 
 
 #### Breadth First Search (BFS)
@@ -1563,6 +1599,10 @@ MST-PRIM(G, w, r)
     				then pie[v] <- u
     					key[v] < w(u,v)
 ```
+
+
+
+
 
 
 
