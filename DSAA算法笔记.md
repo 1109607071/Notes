@@ -2,6 +2,12 @@
 
 [toc]
 
+
+
+# DSAA Part
+
+
+
 ##### [网课地址](http://mooc1.chaoxing.com/course/214395507.html)
 
 leetcode: some questions for you to practise
@@ -1708,3 +1714,249 @@ MST-PRIM(G, w, r)
 > Hence, $α = 2, β = 2, γ = 1$. 
 >
 > Since $\log_𝛽 𝛼 = \log_2 2 = 1 = γ$, we know that $𝑇(𝑛) = 𝑂(𝑛^1\log 𝑛) = 𝑂(n\log 𝑛)
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 算法设计与分析
+
+
+
+
+
+### Problem1.1 Stable Matching
+
+
+
+#### Stable Matching Problem
+
+Goal: Given n men and n women, find a "suitable" matching.
+
+- Participants rate members of opposite sex.
+- Each man lists women in order of preference from best to worst. 
+- Each woman lists men in order of preference from best to worst.
+
+Example :
+
+| Man    | 1^st^  | 2^nd^  | 3^rd^ |
+| ------ | ------ | ------ | ----- |
+| Xavier | Amy    | Bertha | Clare |
+| Yancey | Bertha | Amy    | Clare |
+| Zeus   | Amy    | Bertha | Clare |
+
+
+
+| Woman  | 1^st^  | 2^nd^  | 3^rd^ |
+| ------ | ------ | ------ | ----- |
+| Amy    | Yancey | Xavier | Zeus  |
+| Bertha | Xavier | Yancey | Zeus  |
+| Clare  | Xavier | Yancey | Zeus  |
+
+- X-C, Y-B, Z-A    —> unstable			Bertha & Xavier, improve both matching
+- X-A, Y-B, Z-C    —> stable
+
+
+
+
+
+- **Perfect matching**: everyone is matched monogamously(一夫一妻的).
+- Each man gets exactly one woman. 
+    - Each woman gets exactly one man.
+- **Stability**: no incentive(刺激) for some pair of participants to undermine(侵蚀) assignment by joint action.
+    - *In matching M, an unmatched pair m-w is unstable if man m and woman w prefer each other to current partners.*
+    - **Proof** :  $\uparrow$ find one unstable match 
+- Unstable pair m-w could each improve by eloping.
+- **Stable matching**: perfect matching with no unstable pairs.
+- **Stable matching problem**: Given the preference lists of n men and n women, find a stable matching *if one exists*.
+
+
+
+
+
+==A Stable Matching does not always exist, not always unique either==
+
+#### Stable Roommate Problem
+
+- 2n people; each person ranks others from 1 to 2n-1.
+- Assign roommate pairs so that no unstable pairs.
+
+
+
+#### Propose-And-Reject Algorithm
+
+[Gale-Shapley 1962] Garantee to find a stable matching
+
+```pseudocode
+Initialize each person to be free.
+while (some man is free and hasn't proposed to every woman) {
+    Choose such a man m
+	w = 1st woman on m's list to whom m has not yet proposed 
+	if (w is free)
+        assign m and w to be engaged
+    else if (w prefers m to her fiancé m_)
+	    assign m and w to be engaged, and m_ to be free
+    else
+    	w rejects m
+}
+```
+
+- Complexity: $O(n^2)$
+
+- Proof:
+    - Perfection: Everyone get matched.
+    - Stability: No unstable pairs.
+
+
+
+#### Efficient Implementation
+
+- Efficient implementation. We describe $O(n^2)$ time implementation.
+- Representing men and women.
+    - Assume men are named 1, ..., n.
+    - Assume women are named 1', ..., n'.
+
+
+
+- Engagements.
+	- Maintain a list of free men, e.g., in a queue.
+    - Maintain two arrays `wife[m]`, and `husband[w]`.
+        - set entry to 0 if unmatched
+        - if m matched to w then `wife[m]=w` and `husband[w]=m`
+
+
+
+- Men proposing.
+    - For each man, maintain a list of women, ordered by preference.
+    - Maintain an array count[m] that counts the number of proposals made by man m.
+
+
+
+- Women rejecting/accepting.
+	- Does woman w prefer man m to man m'?
+	- For each woman, create inverse of preference list of men.
+	    - Use `inverse[]` to find preference of wooer in $O(1)$ time.
+	- Constant time access for each query after $O(n)$ preprocessing.
+
+| Amy      | 1^st^ | 2^nd^ | 3^rd^ | 4^th^ | 5^th^ | 6^th^ | 7^th^ | 8^th^ |
+| -------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| `Pref[]` | 8     | 3     | 7     | 1     | 4     | 5     | 6     | 2     |
+
+| Amy         | 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     |
+| ----------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| `Inverse[]` | 4^th^ | 8^th^ | 2^nd^ | 5^th^ | 6^th^ | 7^th^ | 3^rd^ | 1^st^ |
+
+```pseudocode
+for i = 1 to n
+	inverse[pref[i]] = i
+```
+
+
+
+#### Man Optimality
+
+- Man-optimal assignment for Gale-Shapley Algorithm:
+    -  Each man receives best valid partner.
+
+
+
+#### Woman Pessimality
+
+- Woman-pessimal assignment for Gale-Shapley Algorithm:
+    -  Each woman receives worst valid partner.
+
+
+
+
+
+
+
+### Problem1.2 Five Representative Problems
+
+- **Interval scheduling**: 
+    - $n\cdot logn$ greedy algorithm.
+- **Weighted interval scheduling**: 
+    - $n\cdot logn$ dynamic programming algorithm.
+- **Bipartite matching**: 
+    - $n^k$ max-flow based algorithm.
+- **Independent set**: 
+    - NP-complete.
+- **Competitive facility location**: 
+    - PSPACE-complete.
+
+[计算复杂性分类](https://www.sohu.com/a/271557851_741733)
+
+
+
+#### Interval Scheduling
+
+- **Input:**
+    - Set of jobs with **start times** and **finish times**.
+- **Goal:**
+    - Find maximum cardinality subset of mutually compatible jobs.
+        - Jobs don’t overlap
+
+
+
+
+
+#### Weighted Interval Scheduling
+
+- **Input:**
+    - Set of jobs with **start times**, **finish times**, and **weights**. 
+- **Goal:**
+    - Find maximum weight subset of mutually compatible jobs.
+        - Jobs don’t overlap
+
+
+
+
+
+#### Bipartite Matching
+
+- **Input:**
+    - Bipartite graph.
+- **Goal:**
+    - Find maximum cardinality matching.
+
+
+
+
+
+#### Independent Set
+
+- **Input:**
+    - Graph.
+- **Goal:**
+    - Find maximum cardinality independent set.
+        - Independent: subset of nodes such that no two joined by an edge
+
+
+
+
+
+#### Competitive Facility Location
+
+- **Input:**
+    - Graph with weight on each node.
+- **Game:**
+    - Two competing players alternate in selecting nodes.
+    - Not allowed to select a node if any of its neighbors have been selected.
+- **Goal:**
+    - Select a maximum weight subset of nodes.
+        - Subset: independent set
+
+
+
+
+
+
+

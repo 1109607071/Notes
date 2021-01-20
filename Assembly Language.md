@@ -332,6 +332,8 @@ main:
 
 
 
+##### Calculate dividend 
+
 ```assembly
 .data 
 	str1: .asciiz "13/4 quotient is: "
