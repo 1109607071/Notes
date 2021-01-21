@@ -1,8 +1,232 @@
 # C++
 
-----
+__CS205__
 
-__cs 205__
+[于老师的网课](https://space.bilibili.com/519963684/channel/detail?cid=149591)
+
+
+
+
+
+## Introduction
+
+
+
+### Data type
+
+#### Fundamental types
+
+- Integral Variables
+- Floating-Point Numbers
+- C++ Arithmetic Operations
+
+
+
+#### User Custom types
+
+
+
+
+
+### Components of Program
+
+- Files created by yourself
+
+    - Header file
+    - Code file
+
+-  C/C++ standard file included
+
+- Static library file(静态连接库) included: .lib
+
+    - Header file
+
+    - Complied **code** in object file
+- Dynamic link file (dynamic lib)(动态连接库): .dll
+  - 无main()函数，只有数据类型
+
+
+
+### Identifiers
+
+- Identifiers: used to name entities such as: types, objects (i.e., variables), and functions
+    - Valid identifier: sequence of one or more letters, digits, and underscore ”_” characters that does not begin with a digit
+    - Identifiers are *case* sensitive
+    - Identifiers cannot be any of reserved keywords
+    - **Scope** of identifier is context in which identifier is valid (e.g., block, function, global)
+
+
+
+
+
+### Preprocessor (预处理)
+
+- Preprocessor transforms source code, prior to compilation
+    - Preprocessor passes the output to compiler for compilation
+    - Preprocessor behavior can be controlled by directives
+    - Directive occupies single line of code
+    - No semicolon (`;` —> `\`)
+- Consists of:
+    1. Hash character (i.e. `#`)
+    2. preprocessor instruction (i.e., `define`, `undef`, `include`, `if`, `ifdef`, `ifndef`, `else`, `elif`, `endif`, `line`, `error`, and `pragma`)
+        - `pragma` can be used only once
+    3. Arguments (depending on instruction)
+    4. line break
+- Can be used to:
+    - conditionally compile parts of source file
+    - define macros and perform macro expansion
+    - include other files
+
+
+
+#### Source-File Inclusion
+
+- Include contents of **another file** in source using preprocessor
+
+    ```cpp
+    #include <path_specifier>
+    // or
+    #include "path_specifier"
+    ```
+
+    - **Angle brackets** used for system header files 
+    - **Double quotes** used otherwise
+    - **Path specifier** is pathname (which may include directory) identifying file whose content is to be substituted in place of include directive
+
+- Examples 
+
+    ```cpp
+    #include <iostream>
+    #include <boost/tokenizer.hpp>
+    #include "my_header_file.hpp"
+    #include "some_directory/my_header_file.hpp"
+    ```
+
+
+
+#### Defining Macros (宏)
+
+- Define macros using `#define` directive
+
+- When the preprocessor encounters this directive, it **replaces** any occurrence of **identifier** in the rest of the code by **replacement**
+
+- This replacement can be an expression, a statement, a block or simply anything
+
+    ```cpp
+    #define getmax(a,b) a>b?a:b
+    ```
+
+- Function macro definitions accept two special operators: `#`, `##`(concatenate连接)
+
+- Less readable
+
+    ```cpp
+    #define glue(a,b) a ## b 
+    glue(c,out) << "test";
+    // change it into -->
+    cout<< "test";
+    ```
+
+
+
+#### Conditional Compilation
+
+- **Conditionally** include code through use of `if-elif-else` directives
+
+- Conditional preprocessing block consists of:
+
+    1. `#if`, `#ifdef`, or `#ifndef` directive
+    2. optionally any number of `#elif` directives
+    3. at most one `#else` directive
+    4. `#endif` directive
+
+- Example:
+
+    ```cpp
+    #if DEBUG_LEVEL == 1
+    // ...
+    #elif DEBUG_LEVEL == 2
+    // ...
+    #else
+    // ...
+    #endif
+    ```
+
+
+
+
+
+### Header Filenames
+
+- Reason of using header files
+    - As programs grow larger (and make use of more files), it becomes increasingly tedious(乏味的) to have to forward declare every function you want to use that is defined in a different file.
+
+
+
+### Namespaces
+
+- Reasons of using namesapce
+
+    - To **simplify** the writing of large programs
+    - To help **organize** programs that combine **pre-existing** code from several companies 
+
+- Example: indicate which wanda you want, using double colon `::`
+
+    ```cpp
+    Microflop::wanda("go dancing?");		// use Microflop namespace version
+    Piscine::wanda("a fish named Disire");	// use Piscine namespace version
+    ```
+
+- A namespace example: `std`
+
+    - Standard component of C++ compilers
+
+        ```cpp
+        std::cout << "Hello World!";
+        std::cout << endl;
+        
+        using namespace std;	// lazy approach, all names available
+        // or
+        using std::cout;		// make cout available
+        ```
+
+
+
+
+
+
+
+```cpp
+cout << "\aOperation \"HyperHype\" is now activated!\n";	// '\a' play alert
+cout << "Enter your agent code:______\b\b\b\b\b\b";			// '\b' backspace
+long code;
+cin >> code;
+```
+
+
+
+
+
+### Floating-Point Numbers
+
+- How to represent fractional numbers?
+	- Two parts
+- Computer stores numbers with fractional parts in two parts
+	- One part represents a **value**
+	- The other part **scales** that value up or down
+	    - The scaling factor serves to move the decimal point
+- Benefits 
+	- Floating-point numbers enable to represent fractional, very large, and very small values
+	- C++ is based on binary numbers, so the scaling is by factors of 2
+
+![B98BD93A-9DFD-450F-B76C-04DBFA1B01F4_1_105_c](C++code.assets/B98BD93A-9DFD-450F-B76C-04DBFA1B01F4_1_105_c.jpeg)
+
+![4F4EE784-108B-480A-A3F0-82834D4586D0_1_105_c](C++code.assets/4F4EE784-108B-480A-A3F0-82834D4586D0_1_105_c.jpeg)
+
+
+
+
+
 
 
 
