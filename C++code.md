@@ -223,6 +223,12 @@ cin >> code;
 
 ![4F4EE784-108B-480A-A3F0-82834D4586D0_1_105_c](C++code.assets/4F4EE784-108B-480A-A3F0-82834D4586D0_1_105_c.jpeg)
 
+23 bit maximum: $2^{23} = 8388608$
+
+?float maximum: $(2^{23}-1)\ E\ (2^7-1) = 8388607 \times 127$
+
+
+
 
 
 

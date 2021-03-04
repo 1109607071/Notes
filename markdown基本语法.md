@@ -407,7 +407,7 @@ Note right of C: 没人陪我玩
 
 4. 字体颜色，符号：`、\textcolor{red/blue/green/black/white/cyan/magenta/yellow}`，如：$x\textcolor{red}yz$
 
-5. 隐藏字体，符号：`\style{visibility:hidden}{sth.}`， 如：$\style{visibility:hidden}{(x+1)(x+1)}$
+5. 隐藏字体，符号：`\style{visibility:hidden}{sth.}`， 如：$\style{visibility:hidden}{(x+1)(x+1)}$abc
 
 6. 下划线符号，符号：`\underline`，如：$\underline{x+y}$
 
@@ -527,7 +527,7 @@ Note right of C: 没人陪我玩
 
 15. 齐次方程，符号：`\left \{ \begin{array} \end{array} \right.`，如：
     $$
-     \left \{ 
+    \left \{ 
      \begin{array}{c}
      a_1x+b_1y+c_1z=d_1 \\ 
      a_2x+b_2y+c_2z=d_2 \\ 

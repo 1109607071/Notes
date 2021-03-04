@@ -1917,8 +1917,6 @@ for i = 1 to n
 
 
 
-
-
 ### Problem1.2 Five Representative Problems
 
 - **Interval scheduling**: 
@@ -1944,10 +1942,6 @@ for i = 1 to n
     - Find maximum cardinality subset of mutually compatible jobs.
         - Jobs don’t overlap
 
-
-
-
-
 #### Weighted Interval Scheduling
 
 - **Input:**
@@ -1956,20 +1950,12 @@ for i = 1 to n
     - Find maximum weight subset of mutually compatible jobs.
         - Jobs don’t overlap
 
-
-
-
-
 #### Bipartite Matching
 
 - **Input:**
     - Bipartite graph.
 - **Goal:**
     - Find maximum cardinality matching.
-
-
-
-
 
 #### Independent Set
 
@@ -1979,23 +1965,151 @@ for i = 1 to n
     - Find maximum cardinality independent set.
         - Independent: subset of nodes such that no two joined by an edge
 
-
-
-
-
 #### Competitive Facility Location
 
 - **Input:**
     - Graph with weight on each node.
 - **Game:**
     - Two competing players alternate in selecting nodes.
-    - Not allowed to select a node if any of its neighbors have been selected.
+    - Not allowed to select a node if any of its neighbours have been selected.
 - **Goal:**
     - Select a maximum weight subset of nodes.
         - Subset: independent set
 
 
 
+
+
+### Algorithm’s Performance
+
+- **Completeness**: 
+    - Is it guaranteed to find a solution?
+- **Optimality**: 
+    - Does the strategy find the optimal solution, as defined on page 68?
+- **Time complexity**: 
+    - How long does it take?
+- **Space complexity**: 
+    - How much memory is needed to perform the search?
+
+
+
+
+
+### 2.1 Computational Tractability
+
+#### Polynomial-Time
+
+- **Brute force**:
+    - For many non-trivial problems, there is a natural brute force search algorithm that checks every possible solution. (2n^2^ for stable matching for man and woman)
+    - Typically takes 2^N^ time or worse for inputs of size N.
+- **Desirable scaling property**:
+    - When the input size doubles, the algorithm should only slow down by some constant factor C.
+    - There exists constants c > 0 and d > 0 such that on every input of size N, it's running time is bounded by c N^d^ steps. ($c(2N)^d=c2^dN^d$)
+
+####    Worst-Case Analysis
+
+- **Worst case running time**:
+    - Obtain bound on *largest possible* running time of algorithm on input of a given size N.
+        - Generally captures efficiency in practice.
+        - Draconian view, but hard to find effective alternative.
+- **Average case running time**:
+    - Obtain bound on running time of algorithm on *random* input as a function of input size N.
+        - Hard (or impossible) to accurately model real instances by random distributions.
+        - Algorithm tuned for a certain distribution may perform poorly on other inputs.
+
+#### Worst-Case Polynomial-Time
+
+An algorithm is *efficient* if it's running time is polynomial.
+
+#### Justification: 
+
+It really works in practice!
+
+- In practice, the poly-time algorithms that people develop almost always have low constants and low exponents.
+- Breaking through the exponential barrier of brute force typically exposes some crucial structure of the problem. ($n!$ for stable matching with n men and n women, —> $O(n^2)$
+
+#### Exceptions:
+
+- Some poly-time algorithms do have high constants and/or exponents.
+- The worst case actually happens. ?
+
+
+
+
+
+### 2.2 Asymptotic Order of Growth
+
+- **Upper bounds**
+    - $T(n)$ is $O(f(n))$ if there exist constants $c > 0$ and $n_0 \ge0$ such that for all $n \ge n_0$ we have $T(n)\le cf(n)$
+- **Lower bounds**
+    - $T(n)$ is $\Omega(f(n))$ if there exist constants $c > 0$ and $n_0 \ge0$ such that for all $n \ge n_0$ we have $T(n)\ge cf(n)$
+- **Tight bounds**
+    - $T(n)$ is $\Theta(f(n))$ if $T(n)$ is both $O(f(n))$ and $\Omega(f(n))$
+
+- i.e. $T(n)=3n^2+2n+32$
+    - $T(n)$ is both $O(n^3)$, $O(n^2)$, $\Omega(n^2)$, $\Omega(n)$, and $\Theta(n^2)$
+
+Notation:
+
+Slight abuse of notation. T(n) = O(f(n))
+
+- Not transitive
+- Better notation using $\in$
+
+
+
+**Polynomial Time O(n^k^) Time**
+
+- Independent set of size k. Given a graph, are there k nodes such that no two of them are conneted?
+
+**Exponential Time**
+
+- Independent set. Given a graph, what is maximum size of an independent set?
+
+
+
+
+
+### Amortised arguments (摊分分析)
+
+将仅有部分步骤时间复杂度较高的程序的时间复杂度分摊到整个程序运行时间中。
+
+Types:
+
+- Aggregate (Above)
+- Accounting
+- Potential
+
+##### Accounting method 
+
+- Charge its op a fictitious amortised cost c~i~
+- Fee is consumed to perform the operations
+- Unused amount stored in ‘bank’ for use by later ops
+- ‘Bank balance’ must not go negative
+
+目标：每一步摊分的钱数*均*足以支付实际需要支付的钱数。
+
+i.e. 动态分配内存
+
+| $i$         | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    |
+| ----------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| $S$ (Space) | 1    | 2    | 4    | 8    | 8    | 8    | 8    | 8    | 16   |
+| $\hat{C_i}$ | 3    | 3    | 3    | 3    | 3    | 3    | 3    | 3    | 3    |
+| $b$         | 2    | 3    | 3    | 5    | 3    | 5    | 7    | 9    | 3    |
+
+> $\hat{{C_i}}$指该步骤摊分（预算）的时间。$b$指支付完该步骤的代价后的剩余。最后只需要看$b$是否为负即可知道该算法是否过于复杂。
+
+##### Potential method
+
+- ‘Bank account’ view as potential energy of dynamic set
+- Start with data structure $D_0$
+- Op $i$ transforms $D_{i-1}$ to $D_i$
+- Cost of op $i$ is $C_i$
+
+i.e. 先提猜想，再提证明
+$$
+\Phi(D_i)\Rightarrow \R \\ \ \\ \left \{ \begin{array}{l} \Phi(D_0)=0 \\ \Phi(D_i)\ge0 \end{array} \right. \\ \hat{C_i}=C_i=\Phi(D_i)-\Phi(D_{i-1}) \\ \sum^n_{i=1}{\hat{C_i}}=\sum^n_{i=1}{C_i}=\Phi(D_n)-\Phi(D_0) \\ \sum{\hat{C_i}}\ge \sum{C_i}
+$$
 
 
 

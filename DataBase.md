@@ -42,6 +42,8 @@ Many kinds of SQL Languages, like PostgreSQL, ORACLE, MySQL, SQL Server...
 
 
 
+### Table
+
 #### Create a Table
 
 - table_name = TABLENAME = TaBleNamE (same with the Identifiers, columns)
@@ -166,7 +168,7 @@ values('us', 'United States', 'AMERICA')
 
 
 
-#### SQL注入攻击
+##### SQL注入攻击
 
 Use `''` or `\'`
 
@@ -182,3 +184,215 @@ Use `''` or `\'`
         - `CURRENT_TIMESTAMP(time included)`
     - Other functions owned by different languages themselves.
 
+Convert the Date data by functions which ‘cast’ data types to avoid bad surprises.
+
+```sql
+select * from forum_posts where post_date >= '2018-03-12';				// do not
+select * from forum_posts where post_date >= date('2018-03-12');
+select * from forum_posts where post_date >= date('12 March, 2018');
+```
+
+##### Datetime
+
+- Change Date to Datetime will set Time to `00:00:00`
+- Solution:
+    - Set Time to `23:59:59`
+
+Date Arithmetic: `+1 month` != `+30 days` 
+
+
+
+#### Select
+
+To display the full content of a table. (Not recommended)
+
+```sql
+select * from tablename				// print table
+```
+
+Too many data may block the internet. Let the DB Server to handle the computation.
+
+
+
+##### To select a Row
+
+```sql
+select * from movies		// movies is a column name
+where country = 'us'
+```
+
+You can compare to a number, a string constant(use `‘’`, not `“”`), another column (from the same table or another, we'll see queries involving several tables later) or the result of a function (we'll see them soon)
+
+嵌套：
+
+Type1:
+
+```sql
+select *
+from (select * from movies
+     	where country = 'us') as us_movies
+where year_released between 1940 and 1949
+```
+
+Type2:
+
+```sql
+select *
+from (select * from movies 
+     	where year_released between 1940 and 1949)
+     movies_from_the_1040s
+where country = 'us'
+```
+
+Type3: (simplest)
+
+```sql
+select *
+from movies
+where country = 'us'
+	and year_released between 1940 and 1949
+```
+
+##### priority level
+
+==`and` > `or`== : may cause a problem.
+
+```sql
+where country = 'us'
+	or country = 'gb'
+	and year_released between 1940 and 1949
+```
+
+First it select `country = ‘us’ and year_released between 1940 and 1949`, then `or country = 'gb’`, thus no British movies are selected.
+
+```sql
+where (country = 'us'
+	or country = 'gb')
+	and year_released between 1940 and 1949
+```
+
+`where (country = 'us' or country = 'gb')` == `where country in ('us', 'gb')`
+
+##### Comparison operators
+
+```sql
+=					#equal
+<>	or	!=			#not equal
+<		<=
+>		>=
+```
+
+Comparison:
+
+- `2 < 10`
+- `'2' < '10'` : wrong
+- `'2-JUN-1883' > '1-DEC-2056'` : wrong
+- String uses lexicographical order
+
+##### like
+
+Search for a pattern. 
+
+- `%`: any number of characters, including none
+- `_`: one and only one character
+
+```sql
+select * from movies
+where title not like '%A%'
+	and title not like '%a%'
+```
+
+
+
+#### NULL
+
+In SQL, a NULL denotes that a value is *missing*. ==NULL is Not A Value!==
+
+```sql
+where column_name = null			# wrong!
+where column_name <> null			# wrong!
+
+where column_name is null
+where column_name is not null
+```
+
+- Check for alive people
+
+    ```sql
+    select * from people where died is null
+    ```
+
+    ```sql
+    select peopleid, surname,
+    	date_part('year', now())-born as age
+    from people
+    where died is null
+    ```
+
+    
+
+
+
+#### Link two Strings
+
+```sql
+'hello' || 'world'
+'hello' + 'world'
+concat('hello') 'world'
+```
+
+- Example:
+
+    ```sql
+    select title
+    	|| 'was released in'
+    	|| year_released
+    	as movie_release
+    from movies
+    where country = 'us'
+    ```
+
+- Try:
+
+    ```sql
+    select 'hello'				# output is 'hello'
+    select 2>1					# output is 'ture'
+    ```
+
+
+
+
+
+### Functions
+
+
+
+```sql
+select title, year_released
+from movies
+where country = 'us'
+```
+
+- Avoid leaking any internal messages, like id. 
+
+Try to avoid using functions after `where`. After `select` is ok.
+
+`round()`: 四舍五入
+
+`trunc()`: 截断小数`trunc(3.141592, 3)` 3.141
+
+`upper()`
+
+`lower()`
+
+`substr()`
+
+```sql
+substr('Citizen Kane', 5, 3)			# start from 1
+```
+
+`trim()`:	Delete space on left and white
+
+`replace()`
+
+`cast()`: 类型转换
