@@ -119,6 +119,8 @@ int main() {
 [1]: http://www.google.com/
 [runoob]: http://www.runoob.com/
 
+引用格式则需要输入`[^1]:example.com`来使用[^1], Typora下点击上标会滚动至附录页
+
 ---
 
 ## 7. 图片
@@ -726,4 +728,6 @@ Note right of C: 没人陪我玩
 ---
 
 
+
+[^1]:http://www.runoob.com/
 

@@ -219,9 +219,9 @@ cin >> code;
 	- Floating-point numbers enable to represent fractional, very large, and very small values
 	- C++ is based on binary numbers, so the scaling is by factors of 2
 
-![B98BD93A-9DFD-450F-B76C-04DBFA1B01F4_1_105_c](C++code.assets/B98BD93A-9DFD-450F-B76C-04DBFA1B01F4_1_105_c.jpeg)
+![B98BD93A-9DFD-450F-B76C-04DBFA1B01F4_1_105_c](.C++code.assets/B98BD93A-9DFD-450F-B76C-04DBFA1B01F4_1_105_c.jpeg)
 
-![4F4EE784-108B-480A-A3F0-82834D4586D0_1_105_c](C++code.assets/4F4EE784-108B-480A-A3F0-82834D4586D0_1_105_c.jpeg)
+![4F4EE784-108B-480A-A3F0-82834D4586D0_1_105_c](.C++code.assets/4F4EE784-108B-480A-A3F0-82834D4586D0_1_105_c.jpeg)
 
 23 bit maximum: $2^{23} = 8388608$
 

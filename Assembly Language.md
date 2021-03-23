@@ -1,5 +1,7 @@
 # MIPS
 
+This is a minimum Notes of MIPS assembly language, if you want to write down any details, go to GoodNotes.
+
 
 
 ### Overview
@@ -363,9 +365,9 @@ sle						# set less/equal
 
 ### Common Operations
 
-![image-20210301221945298](Assembly Language.assets/image-20210301221945298.png)
+![image-20210301221945298](.Assembly Language.assets/image-20210301221945298.png)
 
-![image-20210301222001786](Assembly Language.assets/image-20210301222001786.png)
+![image-20210301222001786](.Assembly Language.assets/image-20210301222001786.png)
 
 
 
@@ -403,7 +405,7 @@ jal							# jump and link, used in fuctions
 	beq		$s1, $s4, Else	# if $s1 is equal to $s2, jump to tag Else
 Else: ...
 ```
-Example:
+If-else statement: 
 
 ```assembly
 	bne		$s3, $s4, Else	# be not equal
@@ -421,9 +423,76 @@ else
 	f = g - h
 ```
 
+> Reason why this is so complicated: 
+>
+> If one operation is too complicated, it will cost too much time, then every other fast operations have to wait for it, so the total performance will be bad.
+>
+> So is Pseudo Instruction.
+
+Loop statement:
+
+```assembly
+#while (save[i] == k)
+#  	i += 1;
+# i and k are in $s3 and $s5 and base of array save[] is in $ss6
+
+Loop:
+	sll		$t1, $s3, 2
+	add		$t2, $t1, $s6
+	lw		$50, 0($t1)
+	bne		$t0, $s5, Exit
+	addi	$s3, $s3, 1
+	j		Loop
+Exit:
+```
 
 
 
+### Pseudo Instructions
+
+There is no such instructions in hardware, The assembler translates them into a combination of real instructions.
+
+```assembly
+blt $s0, $s1, Label
+	# If s0<s1, jump to Label, same as below:
+	slt $s2, $s0, $s1
+	bne $s2, $zero, Label
+	
+bgt $s0, $s1, Label
+	# If s0>s1, jump to Label
+ble $s0, $s1, Label
+	# If s0<=s1, jump to Label
+beqz $s0, Label
+	# If s0==0,jumptoLabel
+li $t0, 5
+	# Loadimmediate,t0=5
+Move $t0, $s0
+	# t0 = s0
+```
+
+
+
+### Procedures or (functions)
+
+- A procedure or function is one tool used by the programmers to structure programs
+	- Benefit: easy to understand, reuse code 
+- We can think of a procedure like a spy
+	- acquires resources→performs task→covers his tracks→returns back with desired result
+- When the procedure is executed (when the caller calls the callee), there are six steps
+	- parameters (arguments) are placed where the callee can see them 
+	- control is transferred to the callee
+	- acquire storage resources for callee
+	- execute the procedure
+	- place result value where caller can access it 
+	- return control to caller
+
+#### Procedure Calling
+
+Caller to Callee
+
+Caller:	`int z = add(x, y)`
+
+Callee:	`int add (int a, int b)`
 
 
 
